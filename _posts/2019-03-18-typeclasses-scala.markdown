@@ -24,7 +24,7 @@ trait PokeMove {
 
 trait FireMove extends PokeMove
 case object Ember extends FireMove {
-  override def show = "Vinewhip"
+  override def show = "Ember"
 }
 case object FlameThrower extends FireMove {
   override def show = "FlameThrower"
