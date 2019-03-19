@@ -8,9 +8,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    clean-jekyll-theme (1.0.1)
-      jekyll (~> 3.3)
-      jekyll-seo-tag (~> 2.2)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -245,10 +242,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  clean-jekyll-theme
   github-pages
   jekyll-feed (~> 0.6)
-  jekyll-seo-tag (~> 2.2)
+  minima (~> 2.0)
   tzinfo-data
 
 BUNDLED WITH
