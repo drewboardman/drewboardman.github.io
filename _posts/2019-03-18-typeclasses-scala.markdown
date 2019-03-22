@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Typeclasses in Scala"
+classes: wide
 date:   2019-03-18 19:52:02 -0500
 categories: jekyll update
 ---

@@ -23,6 +23,7 @@ github_username:  drewboardman
 # Build settings
 markdown: kramdown
 theme: minima
+minimal_mistakes_skin: "air"
 plugins:
   - jekyll-feed
 
