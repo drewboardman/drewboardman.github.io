@@ -28,8 +28,8 @@ like:
  2. Put pokemon in that type, with `Tier`
  3. Provide a typeclass instance of something that tells how they stack up against other types
 
-One smart way we could implement this is to model the `Eq` type that Haskell
-uses. Scala happens to have that exact thing, in the `Ordering` typeclass.
+One smart way we could implement this is to model the `Ord` type that Haskell
+uses. Scala happens to have pretty much the same thing, in the `Ordering` typeclass.
 
 ```scala
   trait Hierarchy {
