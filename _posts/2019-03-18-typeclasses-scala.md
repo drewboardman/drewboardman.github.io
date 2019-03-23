@@ -32,36 +32,36 @@ One smart way we could implement this is to model the `Ord` type that Haskell
 uses. Scala happens to have pretty much the same thing, in the `Ordering` typeclass.
 
 ```scala
-  trait Hierarchy {
-    val order: Int
-  }
+trait Hierarchy {
+  val order: Int
+}
 
-  case object Tier1 extends Hierarchy {
-    override val order = 1
-  }
+case object Tier1 extends Hierarchy {
+  override val order = 1
+}
 
-  case object Tier2 extends Hierarchy {
-    override val order = 2
-  }
+case object Tier2 extends Hierarchy {
+  override val order = 2
+}
 
-  case object Tier3 extends Hierarchy {
-    override val order = 3
-  }
+case object Tier3 extends Hierarchy {
+  override val order = 3
+}
 
-  implicit val TierOrdering: Ordering[Hierarchy] = new Ordering[Hierarchy] {
-    override def compare(x: Hierarchy, y: Hierarchy): Int = x.order - y.order
-  }
+implicit val TierOrdering: Ordering[Hierarchy] = new Ordering[Hierarchy] {
+  override def compare(x: Hierarchy, y: Hierarchy): Int = x.order - y.order
+}
 ```
 
 Nice, now let's test that this works.
 
 ```scala
 it("should correctly compare Tiers") {
-      Tier1 > Tier2 shouldBe false
-      Tier2 > Tier1 shouldBe true
-      Tier1 < Tier2 shouldBe true
-      Tier3 == Tier3 shouldBe true
-    }
+  Tier1 > Tier2 shouldBe false
+  Tier2 > Tier1 shouldBe true
+  Tier1 < Tier2 shouldBe true
+  Tier3 == Tier3 shouldBe true
+}
 ```
 
 ```
@@ -90,56 +90,56 @@ ask users to implement for their new types. While we're at it, we should
 probably make a simple ADT that expresses the "*decision*" of the fights.
 
 ```scala
-  trait Decision
-  case class Winner(a: Pokemon) extends Decision
-  case object Draw extends Decision
-  case object NotHandled extends Decision
+trait Decision
+case class Winner(a: Pokemon) extends Decision
+case object Draw extends Decision
+case object NotHandled extends Decision
 
-  trait Rules[A] {
-    def compare(a1: A, a2: Pokemon): Decision
-  }
-  ```
+trait Rules[A] {
+  def compare(a1: A, a2: Pokemon): Decision
+}
+```
 
 We need `NotHandled` here so that our implementations leave room for others to
 add new `Rules` and `Pokemon` types in the future. Speaking of pokemon, we need
 to make a bunch.
 
 ```scala
-  sealed trait Pokemon {
-    val tier: Hierarchy
-  }
+sealed trait Pokemon {
+  val tier: Hierarchy
+}
 
-  case class FirePokemon(override val tier: Hierarchy) extends Pokemon
+case class FirePokemon(override val tier: Hierarchy) extends Pokemon
 
-  val charmander = FirePokemon(Tier1)
-  val charmeleon = FirePokemon(Tier2)
-  val charizard = FirePokemon(Tier3)
+val charmander = FirePokemon(Tier1)
+val charmeleon = FirePokemon(Tier2)
+val charizard = FirePokemon(Tier3)
 
-  case class WaterPokemon(override val tier: Hierarchy) extends Pokemon
+case class WaterPokemon(override val tier: Hierarchy) extends Pokemon
 
-  val squirtle = WaterPokemon(Tier1)
-  val warTortle = WaterPokemon(Tier2)
-  val blastoise = WaterPokemon(Tier3)
+val squirtle = WaterPokemon(Tier1)
+val warTortle = WaterPokemon(Tier2)
+val blastoise = WaterPokemon(Tier3)
 
-  case class GrassPokemon(override val tier: Hierarchy) extends Pokemon
+case class GrassPokemon(override val tier: Hierarchy) extends Pokemon
 
-  val bulbasaur = GrassPokemon(Tier1)
-  val ivysaur = GrassPokemon(Tier2)
-  val venusaur = GrassPokemon(Tier3)
+val bulbasaur = GrassPokemon(Tier1)
+val ivysaur = GrassPokemon(Tier2)
+val venusaur = GrassPokemon(Tier3)
 ```
 
 Now we have enough information to implement `Rules`. Here is a first pass at
 `FirePokemon`.
 
 ```scala
-  implicit val FireRules: Rules[FirePokemon] = new Rules[FirePokemon] {
-    def compare(fire: FirePokemon, opponent: Pokemon): Decision = opponent match {
-      case water: WaterPokemon => Winner(water)
-      case grass: GrassPokemon => Winner(fire)
-      case anotherFire: FirePokemon => Draw
-      case _ => NotHandled
-    }
+implicit val FireRules: Rules[FirePokemon] = new Rules[FirePokemon] {
+  def compare(fire: FirePokemon, opponent: Pokemon): Decision = opponent match {
+    case water: WaterPokemon => Winner(water)
+    case grass: GrassPokemon => Winner(fire)
+    case anotherFire: FirePokemon => Draw
+    case _ => NotHandled
   }
+}
 ```
 
 As you can see, we're using the `NotHandled` result for the case where we're
@@ -173,32 +173,32 @@ Taking this new function, we can improve our `FireRules`. While we're at it, we
 can implement the others as well.
 
 ```scala
-  implicit val FireRules: Rules[FirePokemon] = new Rules[FirePokemon] {
-    def compare(fire: FirePokemon, opponent: Pokemon): Decision = opponent match {
-      case water: WaterPokemon => Winner(water.considerTiers(fire))
-      case grass: GrassPokemon => Winner(fire.considerTiers(grass))
-      case anotherFire: FirePokemon => handleSameType(fire, anotherFire)
-      case _ => NotHandled
-    }
+implicit val FireRules: Rules[FirePokemon] = new Rules[FirePokemon] {
+  def compare(fire: FirePokemon, opponent: Pokemon): Decision = opponent match {
+    case water: WaterPokemon => Winner(water.considerTiers(fire))
+    case grass: GrassPokemon => Winner(fire.considerTiers(grass))
+    case anotherFire: FirePokemon => handleSameType(fire, anotherFire)
+    case _ => NotHandled
   }
+}
 
-    implicit val WaterRules: Rules[WaterPokemon] = new Rules[WaterPokemon] {
-    def compare(water: WaterPokemon, opponent: Pokemon): Decision = opponent match {
-      case fire: FirePokemon => Winner(water.considerTiers(fire))
-      case grass: GrassPokemon => Winner(grass.considerTiers(water))
-      case anotherWater: WaterPokemon => handleSameType(water, anotherWater)
-      case _ => NotHandled
-    }
+  implicit val WaterRules: Rules[WaterPokemon] = new Rules[WaterPokemon] {
+  def compare(water: WaterPokemon, opponent: Pokemon): Decision = opponent match {
+    case fire: FirePokemon => Winner(water.considerTiers(fire))
+    case grass: GrassPokemon => Winner(grass.considerTiers(water))
+    case anotherWater: WaterPokemon => handleSameType(water, anotherWater)
+    case _ => NotHandled
   }
+}
 
-  implicit val GrassRules: Rules[GrassPokemon] = new Rules[GrassPokemon] {
-    def compare(grass: GrassPokemon, opponent: Pokemon): Decision = opponent match {
-      case fire: FirePokemon => Winner(fire.considerTiers(grass))
-      case water: WaterPokemon => Winner(grass.considerTiers(water))
-      case anotherGrass: GrassPokemon => handleSameType(grass, anotherGrass)
-      case _ => NotHandled
-    }
+implicit val GrassRules: Rules[GrassPokemon] = new Rules[GrassPokemon] {
+  def compare(grass: GrassPokemon, opponent: Pokemon): Decision = opponent match {
+    case fire: FirePokemon => Winner(fire.considerTiers(grass))
+    case water: WaterPokemon => Winner(grass.considerTiers(water))
+    case anotherGrass: GrassPokemon => handleSameType(grass, anotherGrass)
+    case _ => NotHandled
   }
+}
 ```
 
 Awesome. Now we have all the things we need to finally implement `fight`.
