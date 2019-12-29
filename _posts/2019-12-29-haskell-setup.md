@@ -69,7 +69,7 @@ to get it to work on your distro (or with Mac).
   config](https://github.com/neoclide/coc.nvim/wiki/Language-servers#haskell).
   However, you **need to understand this important point** with this config.
   What this assumes is that you have a binary `ghc` available on your path that
-  matches the project ghc. This is almost certainly not (and shouldn't) be the
+  matches the project ghc. This is almost certainly not (and shouldn't be) the
   case if you're using stack. You need to tell coc.nvim that you're using stack,
   and that you want stack to manage the `ghc` executable.
   - To do this, make sure you have stack's package directory on your path. So
@@ -87,10 +87,9 @@ to get it to work on your distro (or with Mac).
 
 Final Setup
 ------------
-* Make sure you `stack build` in your project before you open it in nvim.
-
-
 There you have it, a nice `nvim` experience with haskell. Some tips:
+
+* Make sure you `stack build` in your project before you open it in nvim.
 
 * Some useful keybinds that come by default:
 
