@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Typeclasses in Scala"
-date:   2019-03-18 19:52:02 -0500
+date:   2019-03-18 19:52:02 -0400
 categories: jekyll update
 ---
 I was reading the School of Haskell's [Type Families and
