@@ -114,10 +114,32 @@ aggregate f xs = sum (map f xs)
 ```
 
 is of the form `\f g x y -> f (g x y)`. This means that our original point-full
-implementation of `aggregate` is the blackbird combinator.
+implementation of `aggregate` is the blackbird combinator. You should also see
+that we arrive back at our original implementation but doing this exercise:
 
-If we create a symbol for the blackbird `(.:)`, we have the following
-relationship
+```haskell
+aggregate f    = sum . (map f)
+aggregate f xs = sum (map f xs)
+```
+
+So here is that *intuition* that I referred to earlier. We, at two points in our
+exercise, arrived at something that should inform you that the blackbird can be
+used.
+
+```haskell
+aggregate f    = sum . (map f) -- of the form \f g x y -> f (g x y)
+
+aggregate      = (sum .) . map -- of the form (f .) . g
+```
+
+Any position you find yourself in where you have a function that can fit one of
+these forms, you can intuit that blackbird can be used to create a point-free
+version that is easier to read (given that you're familiar with blackbird in the
+first place).
+
+To make it easier to read, let's use that infix operator we showed at the
+beginning of the post. Creating this symbol for the blackbird `(.:)`, we have
+the following relationship
 
 ```haskell
 (.:) = \f g x y -> f (g x y)
