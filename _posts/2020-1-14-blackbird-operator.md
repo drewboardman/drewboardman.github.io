@@ -127,9 +127,9 @@ exercise, arrived at something that should inform you that the blackbird can be
 used.
 
 ```haskell
-aggregate f    = sum . (map f) -- of the form \f g x y -> f (g x y)
+aggregate f = sum . (map f) -- of the form \f g x y -> f (g x y)
 
-aggregate      = (sum .) . map -- of the form (f .) . g
+aggregate   = (sum .) . map -- of the form (f .) . g
 ```
 
 Any position you find yourself in where you have a function that can fit one of
