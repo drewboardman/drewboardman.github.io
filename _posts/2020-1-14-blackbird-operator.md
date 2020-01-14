@@ -40,7 +40,7 @@ We can refactor this into point-free style
 totalNumber = sum . (map length)
 ```
 
-And it would be nice to generalize this over all functions `f` instead of
+It would be nice to generalize this over all functions `f` instead of
 `length`
 
 ```haskell
@@ -73,13 +73,13 @@ Now just looking at our function we see:
 (.) sum == (sum .) == \f -> sum . f
 ```
 
-So now we can finally write this in a (really ugly) point free way
+Now we can finally write this in a (really ugly) point free way
 
 ```haskell
 aggregate = (sum .) . map
 ```
 
-So now I think is where knowledge of the blackbird's existence has to come into
+I think this is where knowledge of the blackbird's existence has to come into
 play, so I'll just post the combinator here. You could probably just get this
 same combinator by refactoring `aggregate`, but the intuition to do so seems
 very unlikely unless you already knew you had blackbird as a goal. Also a
@@ -90,7 +90,7 @@ nothing outside of the lambda.
 \f g x y -> f(g x y)
 ```
 
-So how does `aggregate = (sum .) . map` become `\x y -> f(g x y)`? Well, let's
+How does `aggregate = (sum .) . map` become `\x y -> f(g x y)`? Well, let's
 expand it and see:
 
 ```haskell
@@ -114,7 +114,7 @@ aggregate f xs = sum (map f xs)
 is of the form `\f g x y -> f (g x y)`. This means that our original point-full
 implementation of `aggregate` is the blackbird combinator.
 
-So if we create a symbol for the blackbird `(.:)`, we have the following
+If we create a symbol for the blackbird `(.:)`, we have the following
 relationship
 
 ```haskell
@@ -135,7 +135,7 @@ result
 (.:) =         (.) . (.)
 ```
 
-So now we can apply this to our `aggregate` function
+Now we can apply this to our `aggregate` function
 
 ```haskell
 aggregate f xs = sum (map f xs)
@@ -143,5 +143,5 @@ aggregate      = (sum .) . map
 aggregate      = sum .: map
 ```
 
-And there you have it, creating a point-free version of our original function
+There you have it, creating a point-free version of our original function
 using the infix operator form of the blackbird combinator.
