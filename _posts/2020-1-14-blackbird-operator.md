@@ -80,15 +80,17 @@ aggregate = (sum .) . map
 ```
 
 I think this is where knowledge of the blackbird's existence has to come into
-play, so I'll just post the combinator here. You could probably just get this
-same combinator by refactoring `aggregate`, but the intuition to do so seems
-very unlikely unless you already knew you had blackbird as a goal. Also a
-*combinator* is just a lambda expression that refers only to its arguments and
-nothing outside of the lambda.
+play, so I'll just post the combinator here.
 
 ```haskell
 \f g x y -> f (g x y)
 ```
+
+You could probably just get this same combinator by refactoring `aggregate`, but
+the intuition to do so seems very unlikely unless you already knew you had
+blackbird as a goal. Also a *combinator* is just a lambda expression that refers
+only to its arguments and nothing outside of the lambda.
+
 
 How does `aggregate = (sum .) . map` become `\f g x y -> f (g x y)`? Well, let's
 expand it and see:
