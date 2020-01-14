@@ -124,8 +124,9 @@ relationship
      = \f g     -> (f .) . g
 ```
 
-We can make this point-free and get to our final, easier to understand,
-result
+However, if you remember from the beginning of this post - blackbird looks like
+`(.) . (.)`. How does one get from `(f .) . g` to this final result? Consider
+the following reduction.
 
 ```haskell
 (.:) = \f g -> (f .) . g
