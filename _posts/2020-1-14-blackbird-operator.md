@@ -67,7 +67,7 @@ example is:
 (1+) == (+) 1 == \x -> 1 + x
 ```
 
-Now just looking at our function we see:
+Just looking at our function we see:
 
 ```haskell
 (.) sum == (sum .) == \f -> sum . f
@@ -104,7 +104,7 @@ aggregate f xs = sum $ map f xs
 aggregate f xs = sum (map f xs)
 ```
 
-Now you can see that
+You can see that
 
 ```haskell
 aggregate f xs = sum (map f xs)
@@ -122,7 +122,7 @@ relationship
      = \f g     -> (f .) . g
 ```
 
-Now we can make this point-free and get to our final, easier to understand,
+We can make this point-free and get to our final, easier to understand,
 result
 
 ```haskell
