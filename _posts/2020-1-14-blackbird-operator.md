@@ -87,10 +87,10 @@ very unlikely unless you already knew you had blackbird as a goal. Also a
 nothing outside of the lambda.
 
 ```haskell
-\f g x y -> f(g x y)
+\f g x y -> f (g x y)
 ```
 
-How does `aggregate = (sum .) . map` become `\x y -> f(g x y)`? Well, let's
+How does `aggregate = (sum .) . map` become `\f g x y -> f (g x y)`? Well, let's
 expand it and see:
 
 ```haskell
