@@ -164,7 +164,11 @@ Now we can apply this to our `aggregate` function
 ```haskell
 aggregate f xs = sum (map f xs)
 aggregate      = (sum .) . map
-aggregate      = sum .: map
+
+-- final form
+
+aggregate :: Num c => (a -> c) -> [a] -> c
+aggregate = sum .: map
 ```
 
 There you have it, creating a point-free version of our original function
