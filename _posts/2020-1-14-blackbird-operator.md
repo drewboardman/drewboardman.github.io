@@ -23,13 +23,14 @@ Prelude> totalNumber xs
 3
 ```
 
-Then moving this to point-free you get
+We can refactor this into point-free style
 
 ```haskell
 totalNumber = sum . (map length)
 ```
 
-Which can then be generalized to
+And it would be nice to generalize this over all functions `f` instead of
+`length`
 
 ```haskell
 aggregate f = sum . (map f)
@@ -68,12 +69,14 @@ aggregate = (sum .) . map
 ```
 
 So now I think is where knowledge of the blackbird's existence has to come into
-play, so I'll just post the combinator here. Also a *combinator* is just a
-lambda expression that refers only to its arguments and nothing outside of the
-lambda.
+play, so I'll just post the combinator here. You could probably just get this
+same combinator by refactoring `aggregate`, but the intuition to do so seems
+very unlikely unless you already knew you had blackbird as a goal. Also a
+*combinator* is just a lambda expression that refers only to its arguments and
+nothing outside of the lambda.
 
 ```haskell
-\x y -> f(g x y)
+\f g x y -> f(g x y)
 ```
 
 So how does `aggregate = (sum .) . map` become `\x y -> f(g x y)`? Well, let's
