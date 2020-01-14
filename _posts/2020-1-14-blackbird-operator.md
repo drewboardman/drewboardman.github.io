@@ -113,9 +113,8 @@ aggregate f xs = sum (map f xs)
                = \f xs -> sum (map f xs)
 ```
 
-is of the form `\f g x y -> f (g x y)`. This means that our original point-full
-implementation of `aggregate` is the blackbird combinator. You should also see
-that we arrive back at our original implementation but doing this exercise:
+is of the form `\f g x y -> f (g x y)`. You should recognize here that we arrive
+back at our original implementation of `aggregate` by doing this exercise:
 
 ```haskell
 aggregate f    = sum . (map f)
