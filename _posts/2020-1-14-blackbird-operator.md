@@ -86,6 +86,8 @@ expand it and see:
 aggregate      = (sum .) . map
 aggregate      = (.) sum . map
 aggregate f    = (.) sum $ map f
+aggregate f    = (.) sum (map f)
+aggregate f    = sum . (map f)
 aggregate f    = sum . map f
 aggregate f xs = sum $ map f xs
 aggregate f xs = sum (map f xs)
