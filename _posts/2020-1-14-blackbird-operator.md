@@ -18,6 +18,7 @@ thought of as the "composition of *compose*`(.)` and *compose*`(.)`".
 Blackbird operator
 
 ```haskell
+(.:) :: (c -> d) -> (a -> b -> c) -> a -> b -> d
 (.:) = (.) . (.)
 ```
 
