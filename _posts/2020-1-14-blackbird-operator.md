@@ -104,15 +104,22 @@ aggregate f xs = sum $ map f xs
 aggregate f xs = sum (map f xs)
 ```
 
-Now you can see that `aggregate f xs = sum (map f xs) == \f xs -> sum (map f
-xs)` is of the form `\f g x y -> f (g x y)`. This means that our original point-full
+Now you can see that
+
+```haskell
+aggregate f xs = sum (map f xs)
+               = \f xs -> sum (map f xs)
+```
+
+is of the form `\f g x y -> f (g x y)`. This means that our original point-full
 implementation of `aggregate` is the blackbird combinator.
 
 So if we create a symbol for the blackbird `(.:)`, we have the following
 relationship
 
 ```haskell
-(.:) = \f g x y -> f (g x y) = \f g -> (f .) . g
+(.:) = \f g x y -> f (g x y)
+     = \f g     -> (f .) . g
 ```
 
 Now we can make this point-free and get to our final, easier to understand,
