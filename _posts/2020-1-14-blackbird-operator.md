@@ -10,10 +10,20 @@ categories: jekyll update
 I recently watched the [point-free or
 die](https://www.youtube.com/watch?v=seVSlKazsNk) video that was posted on the
 Haskell Discord channel. There was an interesting refactor that was done that I
-figured was a good topic to dive deeper into.
+figured was a good topic to dive deeper into. It revolves around something
+called the *blackbird* which is a [Smullyan
+combinator](https://en.wikipedia.org/wiki/To_Mock_a_Mockingbird), and can be
+thought of as the "composition of *compose*`(.)` and *compose*`(.)`".
 
-During the video, they decide they need to create a function that gets the sum
-of the lengths in a list of lists.
+Blackbird operator
+
+```haskell
+(.:) = (.) . (.)
+```
+
+I will get to how this operator is useful, but we'll need to start at the
+beginning. During the video, they decide they need to create a function that
+gets the sum of the lengths in a list of lists.
 
 ```haskell
 totalNumber xs = sum $ map length xs
