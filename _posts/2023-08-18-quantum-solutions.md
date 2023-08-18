@@ -6,4 +6,4 @@ categories: jekyll update
 ---
 
 <!-- link to /quantum804/chapter1/1_1.pdf -->
-[Problem 1.1 - Complex Number Practie](/assets/quantum804/chapter1/1_1.pdf)
+[Problem 1.1 - Complex Number Practie](/assets/pdf/quantum804/chapter1/1_1.pdf)
